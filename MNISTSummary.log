@@ -1,0 +1,280 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.4.22)  11 SEP 2015 11:32
+entering extended mode
+**MNISTSummary.tex
+(P:\Students\Kim\energy\MNIST\MNISTSummary.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2013-05-26, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\report.cls"
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count88
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(C:\Users\heiligenstein\MiKTeX\tex\latex\wasysym\wasysym.sty
+Package: wasysym 2003/10/30 v2.0 Wasy-2 symbol support package
+\symwasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `wasy' in version `bold'
+(Font)                  U/wasy/m/n --> U/wasy/b/n on input line 90.
+)
+(C:\Users\heiligenstein\MiKTeX\tex\latex\listings\listings.sty
+\lst@mode=\count89
+\lst@gtempboxa=\box26
+\lst@token=\toks15
+\lst@length=\count90
+\lst@currlwidth=\dimen105
+\lst@column=\count91
+\lst@pos=\count92
+\lst@lostspace=\dimen106
+\lst@width=\dimen107
+\lst@newlines=\count93
+\lst@lineno=\count94
+\lst@maxwidth=\dimen108
+
+(C:\Users\heiligenstein\MiKTeX\tex\latex\listings\lstmisc.sty
+File: lstmisc.sty 2014/09/06 1.5e (Carsten Heinz)
+\c@lstnumber=\count95
+\lst@skipnumbers=\count96
+\lst@framebox=\box27
+)
+(C:\Users\heiligenstein\MiKTeX\tex\latex\listings\listings.cfg
+File: listings.cfg 2014/09/06 1.5e listings configuration
+))
+Package: listings 2014/09/06 1.5e (Carsten Heinz)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\multirow\multirow.sty"
+\bigstrutjot=\dimen109
+)
+(C:\Users\heiligenstein\MiKTeX\tex\latex\listings\lstlang1.sty
+File: lstlang1.sty 2014/09/06 1.5e listings language file
+)
+(P:\Students\Kim\energy\MNIST\MNISTSummary.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+
+(C:\Users\heiligenstein\MiKTeX\tex\context\base\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count97
+\scratchdimen=\dimen110
+\scratchbox=\box28
+\nofMPsegments=\count98
+\nofMParguments=\count99
+\everyMPshowfont=\toks16
+\MPscratchCnt=\count100
+\MPscratchDim=\dimen111
+\MPnumerator=\count101
+\makeMPintoPDFobject=\count102
+\everyMPtoPDFconversion=\toks17
+)
+\c@lstlisting=\count103
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 44.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 44.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 44.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 44.
+LaTeX Font Info:    Try loading font information for U+wasy on input line 44.
+
+(C:\Users\heiligenstein\MiKTeX\tex\latex\wasysym\uwasy.fd
+File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
+) [1
+
+{C:/Users/heiligenstein/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+<test_results/test_digit.png, id=14, 433.62pt x 289.08pt>
+File: test_results/test_digit.png Graphic file (type png)
+
+<use test_results/test_digit.png>
+Package pdftex.def Info: test_results/test_digit.png used on input line 77.
+(pdftex.def)             Requested size: 155.24895pt x 103.4997pt.
+
+<test_results/imp_test_digit.png, id=16, 433.62pt x 289.08pt>
+File: test_results/imp_test_digit.png Graphic file (type png)
+
+<use test_results/imp_test_digit.png>
+Package pdftex.def Info: test_results/imp_test_digit.png used on input line 77.
+
+(pdftex.def)             Requested size: 155.24895pt x 103.4997pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<test_results/confusion_matrices.png, id=17, 919.435pt x 712.6625pt>
+File: test_results/confusion_matrices.png Graphic file (type png)
+
+<use test_results/confusion_matrices.png>
+Package pdftex.def Info: test_results/confusion_matrices.png used on input line
+ 112.
+(pdftex.def)             Requested size: 345.0pt x 267.41089pt.
+ [2 <P:/Students/Kim/energy/MNIST/test_results/test_digit.png> <P:/Students/Kim
+/energy/MNIST/test_results/imp_test_digit.png>] [3 <P:/Students/Kim/energy/MNIS
+T/test_results/confusion_matrices.png>] <test_results/nrgs_bp.png, id=27, 506.8
+9375pt x 266.9975pt>
+File: test_results/nrgs_bp.png Graphic file (type png)
+
+<use test_results/nrgs_bp.png>
+Package pdftex.def Info: test_results/nrgs_bp.png used on input line 121.
+(pdftex.def)             Requested size: 345.0pt x 181.72699pt.
+
+<test_results/FE_boxplots.png, id=28, 730.73pt x 282.05376pt>
+File: test_results/FE_boxplots.png Graphic file (type png)
+
+<use test_results/FE_boxplots.png>
+Package pdftex.def Info: test_results/FE_boxplots.png used on input line 174.
+(pdftex.def)             Requested size: 345.0pt x 133.1678pt.
+ [4] [5 <P:/Students/Kim/energy/MNIST/test_results/nrgs_bp.png>]
+<test_results/err_plot.png, id=36, 389.455pt x 282.05376pt>
+File: test_results/err_plot.png Graphic file (type png)
+
+<use test_results/err_plot.png>
+Package pdftex.def Info: test_results/err_plot.png used on input line 178.
+(pdftex.def)             Requested size: 241.49895pt x 174.89734pt.
+ [6 <P:/Students/Kim/energy/MNIST/test_results/FE_boxplots.png> <P:/Students/Ki
+m/energy/MNIST/test_results/err_plot.png>]
+File: test_results/imp_test_digit.png Graphic file (type png)
+
+<use test_results/imp_test_digit.png>
+Package pdftex.def Info: test_results/imp_test_digit.png used on input line 192
+.
+(pdftex.def)             Requested size: 137.9979pt x 92.00021pt.
+
+<test_results/generated.png, id=42, 433.62pt x 289.08pt>
+File: test_results/generated.png Graphic file (type png)
+
+<use test_results/generated.png>
+Package pdftex.def Info: test_results/generated.png used on input line 192.
+(pdftex.def)             Requested size: 137.9979pt x 92.00021pt.
+
+<test_results/weights.png, id=43, 433.62pt x 289.08pt>
+File: test_results/weights.png Graphic file (type png)
+
+<use test_results/weights.png>
+Package pdftex.def Info: test_results/weights.png used on input line 193.
+(pdftex.def)             Requested size: 137.9979pt x 92.00021pt.
+
+<test_results/inv_weights.png, id=44, 433.62pt x 289.08pt>
+File: test_results/inv_weights.png Graphic file (type png)
+
+<use test_results/inv_weights.png>
+Package pdftex.def Info: test_results/inv_weights.png used on input line 193.
+(pdftex.def)             Requested size: 137.9979pt x 92.00021pt.
+
+<test_results/nw.png, id=45, 433.62pt x 289.08pt>
+File: test_results/nw.png Graphic file (type png)
+ <use test_results/nw.png>
+Package pdftex.def Info: test_results/nw.png used on input line 194.
+(pdftex.def)             Requested size: 137.9979pt x 92.00021pt.
+
+<test_results/gw.png, id=46, 433.62pt x 289.08pt>
+File: test_results/gw.png Graphic file (type png)
+ <use test_results/gw.png>
+Package pdftex.def Info: test_results/gw.png used on input line 194.
+(pdftex.def)             Requested size: 137.9979pt x 92.00021pt.
+
+<test_results/mix.png, id=47, 433.62pt x 289.08pt>
+File: test_results/mix.png Graphic file (type png)
+ <use test_results/mix.png>
+Package pdftex.def Info: test_results/mix.png used on input line 196.
+(pdftex.def)             Requested size: 137.9979pt x 92.00021pt.
+
+[7] [8 <P:/Students/Kim/energy/MNIST/test_results/generated.png> <P:/Students/K
+im/energy/MNIST/test_results/weights.png> <P:/Students/Kim/energy/MNIST/test_re
+sults/inv_weights.png> <P:/Students/Kim/energy/MNIST/test_results/nw.png> <P:/S
+tudents/Kim/energy/MNIST/test_results/gw.png> <P:/Students/Kim/energy/MNIST/tes
+t_results/mix.png>] (P:\Students\Kim\energy\MNIST\MNISTSummary.aux) ) 
+Here is how much of TeX's memory you used:
+ 2680 strings out of 493921
+ 37785 string characters out of 3147258
+ 129122 words of memory out of 3000000
+ 5973 multiletter control sequences out of 15000+200000
+ 5799 words of font info for 22 fonts, out of 3000000 for 9000
+ 841 hyphenation exceptions out of 8191
+ 27i,12n,40p,843b,355s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on MNISTSummary.pdf (8 pages, 489252 bytes).
+PDF statistics:
+ 90 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+
