@@ -11,7 +11,6 @@ import time
 import cPickle
 from logistic_sgd import load_data
 
-tot_start_time = time.clock()
 
 dataset = 'mnist.pkl.gz'
 datasets = load_data(dataset)
@@ -43,7 +42,8 @@ inv_weights = 1 - digit_weights
 os.chdir("..") 
 
 def tenk(reclass_iters, imp_pc, c_ones):
-    
+    tot_start_time = time.clock()
+
     reclass_iters, imp_pc, c_ones = int(reclass_iters), int(imp_pc), int(c_ones)
     
     labels = []
@@ -146,7 +146,7 @@ def tenk(reclass_iters, imp_pc, c_ones):
     
     def classify_r(digit_image, reclass_iters):
         
-        threshold = -258 # this should be part of the parameters when retrained
+        threshold = -254 # this should be part of the parameters when retrained
         CDiters = 500 # contrastive divergence iterations
         
         # perform classification, and retrieve top level for generation
