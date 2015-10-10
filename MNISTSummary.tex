@@ -77,6 +77,7 @@ where $\mathcal{F}(v)$ is the free energy formula:
 
 \begin{equation}
 \mathcal{F}(v) = -\log \sum_h e^{-E(v,h)} = -vb - \sum_j \log (1 + e^{c_j + W_j v})
+\label{eq:fev}
 \end{equation}
 
 
@@ -87,13 +88,21 @@ As a classifier, the model is discriminatively trained by stochastic gradient de
 
 \begin{equation}
 \mathcal{F}(v, y) = -\log \sum_h e^{-E(v,h,y)} = -yd - \sum_j \log (1 + e^{c_j + W_j v + U_j y})
+\label{eq:fevy}
 \end{equation}
 
 where $d$ is the bias of class label $y$, and $U$ the class weight matrix. 
 
 
 \subsection{DBNs: Stacking RBMs for Prediction}
-Stacked RBMs have also been used with non-binary categories and continuous-valued inputs, and applied to regression tasks such as speech synthesis \cite{Jaitly}, and time series forecasting \cite{Ginzburg} \cite{Kuremoto}. Continous-valued input $x$ is reconstructed to expected input $v$, and the output of the last feature-detecting RBM unit is the coarse prediction $\hat{x}$. Training consists in fine-tuning the model by adjusting the weights based on the value of $\mathcal{F}$ until the obtention of a refined prediction determined by the error rate of $\hat{x}$ compared to $x$\cite{Kuremoto}.
+Stacked RBMs have also been used with non-binary categories and continuous-valued inputs, and applied to tasks such as speech synthesis \cite{Jaitly}, fMRI image classification \cite{Schmah}, and time series forecasting \cite{Ginzburg} \cite{Kuremoto}. Continous-valued input $x$ is reconstructed to expected input $v$, and the output of the last feature-detecting RBM unit is the coarse prediction $\hat{x}$. Training consists in fine-tuning the model by adjusting the weights based on the value of $\mathcal{F}$ until the obtention of a refined prediction determined by the error rate of $\hat{x}$ compared to $x$\cite{Kuremoto}. The free energy equation for continuous, Gaussian-distributed visible units becomes \cite{Schmah}:
+
+\begin{equation}
+\mathcal{F}(v) = -\log \sum_h e^{-E(v,h)} =  - \sum_j \log (1 + e^{c_j + W_j v}) + \frac{1}{2} \sum_i (v - b)^2
+\label{eq:fegbv}
+\end{equation}
+
+
 
 
 \section{Experiment: The MNIST dataset}
@@ -115,7 +124,7 @@ To test the classifier for performance when dealing with possibly erroneous data
 \end{figure}
 
 
-The test data set contains 10000 image vectors. The error rates and $\mathcal{F}$ values are recorded for the control set, where the $\mathcal{F}$ of the whole network is calculated by adding $\mathcal{F}(v,y)$ (eq. 6) for the top layer class RBM, to the $\mathcal{F}(v)$ (eq. 5) of the other stacked RBMs. For the simulated noised dataset, each individual image vector of the test set is subject to random corruption, determined by a noise percentage and length. The dataset is then reran through the classifier. Table~\ref{table:control} shows the $\mathcal{F}$ mean for each set, and the classification error rate as the corruption percentage is incremented. The classification confusion matrices are presented in Figure~\ref{fig:CM}.
+The test dataset contains 10000 image vectors. The error rates and $\mathcal{F}$ values are recorded for the control set, where the $\mathcal{F}$ of the whole network is calculated by adding the $\mathcal{F}(v,y)$ (eq.~\ref{eq:fevy}) of the top class layer, to the $\mathcal{F}(v)$ (eq.~\ref{eq:fev}) of the other layers. For the simulated noised dataset, each individual image vector of the test set is subject to random corruption, determined by a noise percentage and length. The dataset is then reran through the classifier. Table~\ref{table:control} shows the $\mathcal{F}$ mean for each set, and the classification error rate as the corruption percentage is incremented. The classification confusion matrices are presented in Figure~\ref{fig:CM}.
 
 
 There are many techniques to discover if data is reliable, such as clustering for outlier detection cite{}, or training models with noise for robustness as in denoising autoencoders \cite{Vincent}, but we chose to inspect a measure that is specific to EBMs. We analyzed the behaviour of $\mathcal{F}$ outside of its role in the training of the model. In training, the energy determines the probability of a joint configuration of the visible (here the pixels of the image vector) and hidden units, and is used in the definition of the model's learning. In testing, energy can be used as a marker for unexpected input data since it is directly affected by the values of the visible layer. Figure~\ref{fig:nrgs} shows that, as expected, $\mathcal{F}$ evolves proportionally to the amount of added noise. 
@@ -161,9 +170,9 @@ From the energy formula, we can see how $\mathcal{F}$ is directly affected. A de
 
 
 \subsection{Reconstruction}
-In an attempt to fix the noisy data, we look to the generative powers of the network to reconstruct the image vector. This is different from denoising autoencoders in many ways. First, the model is not trained with noise, so the model attempts reconstruction at time of use, when encountering noise for the first time. Then, the reconstruction is not done by maximizing a variational bound, as proposed by \citep{Vincent}, but simply from a top-down generation process when triggered by a threshold, again, outside of training. Finally, the reconstruction is carried out given a class and the learned weights, and generates a new, possibly different form of the digit. \citep{Vincent}'s reconstruction is realized through a deterministic mapped representation of a corrupted $v$, and learned weights.
+In an attempt to fix the noisy data, we look to the generative powers of the network to reconstruct the image vector. As a generator, the bottom-up pass is the initialization process, or 'wake' phase, and the top-down, or 'sleep' phase is the generation process. This is different from denoising autoencoders in many ways. First, the model is not trained with noise, so the model attempts reconstruction at time of use, when encountering noise for the first time. Then, the reconstruction is not done by maximizing a variational bound, as proposed by \citep{Vincent}, but simply from a top-down generation process when triggered by a threshold, again, outside of training. Finally, the reconstruction is carried out given a class and the learned weights, and generates a new, possibly different form of the digit. \citep{Vincent}'s reconstruction is realized through a deterministic mapped representation of a corrupted $v$, and learned weights.
 
-The issue here is that for the generation, the model must be provided a class to generate the desired digit. Our class prediction $y$ is unreliable, as seen from the increasing error rates, and the wrong class will generate the wrong digit. We therefore must choose a threshold to alert us when a predicted class cannot be trusted.
+The issue here is that for the generation task, the model must be provided a class of the desired digit. Our class prediction $y$ is unreliable, as seen from the increasing error rates, and the wrong class will generate the wrong digit. We therefore must choose a threshold to alert us when a predicted class cannot be trusted.
 % One important difference is that deterministic autoencoders consider that real valued mean as their hidden representation whereas stochastic RBMs sample a binary hidden representation from that mean. 
 
 
@@ -185,7 +194,7 @@ The issue here is that for the generation, the model must be provided a class to
 \end{algorithm}
 
 
-$\mathcal{F}$ is measured using arbitrary units, and its range is specific to each model. The threshold must therefore be chosen based on individual models. The maximum recorded value of $\mathcal{F}$ from the control set was chosen as the threshold for our classifier. If the calculated $\mathcal{F}$ of a given input vector is greater than the set threshold, it is sent back and reclassified $n$ times. The prediction of each reclassification is stored and the class with the greatest count is then chosen as the class label to be clamped in the generation process. This new image is weighted, then fused with the original one, and rerun through the classifier. The results are presented in Table~\ref{table:results}, an an example of the process is demonstrated in Figure~\ref{fig:mixing}.
+$\mathcal{F}$ is measured using arbitrary units, and its range is specific to each model. The threshold must therefore be chosen based on individual models. The maximum recorded value of $\mathcal{F}$ from the control set was chosen as the threshold for our classifier. During the wake phase, if the calculated $\mathcal{F}$ of a given input vector is greater than the set threshold, it is sent back to the first layer and reclassified $n$ times. The prediction of each reclassification is stored and the class with the greatest count is then chosen as the class label to be clamped in the sleep phase. This new image is weighted, fused with the original one that has also been weighted, and reclassified for evaluation. The results are presented in Table~\ref{table:results}, an an example of the process is demonstrated in Figure~\ref{fig:mixing}.
 
 %result tables
 {\newgeometry{left=1.6cm, right=1.6cm, top=2cm}
@@ -396,7 +405,7 @@ Table~\ref{table:results_c} shows the effect of the length of corruption. As it 
 
 
 
-
+% c result tables
 \begin{table}
 	\begin{footnotesize}
 		\subtable[Reconstruction]{
@@ -406,11 +415,12 @@ Table~\ref{table:results_c} shows the effect of the length of corruption. As it 
 				every head row/.style={%
 					output empty row,
 					before row={%
-						\cline{2-17}
-						& \multicolumn{4}{|c|}{1 \% corruption}%
-						& \multicolumn{4}{c|}{2 \% corruption}%
-						& \multicolumn{4}{c|}{5 \% corruption}%
-						& \multicolumn{4}{c|}{10 \% corruption}\\
+						\cline{2-16}
+						& \multicolumn{3}{|c|}{1 \% corruption}%
+						& \multicolumn{3}{c|}{2 \% corruption}%
+						& \multicolumn{3}{c|}{5 \% corruption}%
+						& \multicolumn{3}{c|}{10 \% corruption}%
+						& \multicolumn{3}{c|}{15 \% corruption}\\
 					},
 					after row=\hline
 				},
@@ -425,11 +435,12 @@ Table~\ref{table:results_c} shows the effect of the length of corruption. As it 
 				every head row/.style={%
 					output empty row,
 					before row={%
-						\cline{2-17}
-						& \multicolumn{4}{|c|}{1 \% corruption}%
-						& \multicolumn{4}{c|}{2 \% corruption}%
-						& \multicolumn{4}{c|}{5 \% corruption}%
-						& \multicolumn{4}{c|}{10 \% corruption}\\
+						\cline{2-16}
+						& \multicolumn{3}{|c|}{1 \% corruption}%
+						& \multicolumn{3}{c|}{2 \% corruption}%
+						& \multicolumn{3}{c|}{5 \% corruption}%
+						& \multicolumn{3}{c|}{10 \% corruption}%
+						& \multicolumn{3}{c|}{15 \% corruption}\\
 					},
 					after row=\hline
 				},
