@@ -14,6 +14,7 @@
 \usepackage{geometry}
 \usepackage{algorithm2e}
 \usepackage{natbib}
+\usepackage{amsmath}
 
 \graphicspath{{test_results/}}
 
@@ -62,34 +63,37 @@ A Restricted Boltzmann machine (RBM) is a two-layer network that models the prob
 p(v,h) = \frac{e^{-E(v,h)}}{Z}
 \end{equation}
 
-where the energy fuction of an RBM is defined as:
+where the energy function of an RBM is defined as:
 \begin{equation}
 E(v, h) = -vWh - vb - hc
 \end{equation}
 
-$W$ is the matrix of the weights connecting visible units $v$ to hidden units $h$, and $b$, $c$ are the biases of the visible and hidden layers, respectively. $p(v)$ is obtained by marginalizing out $h$ from the joint distribution, and we get:
+$W$ is the matrix of the weights connecting visible units $v_i$ to hidden units $h_j$, and $b$, $c$ are the biases of the visible and hidden layers, respectively. $p(v)$ is obtained by marginalizing out $h$ from the joint distribution, and we get:
 
-\begin{equation}
-p(v) =  \sum_h \frac{e^{-E(v,h)}}{Z} = \frac{e^{-\mathcal{F}(v)}}{Z}
-\end{equation}
+\begin{align}
+p(v) &=  \sum_h \frac{e^{-E(v,h)}}{Z} \nonumber \\
+& = \frac{e^{-\mathcal{F}(v)}}{Z}
+\end{align}
 
 where $\mathcal{F}(v)$ is the free energy formula:
 
-\begin{equation}
-\mathcal{F}(v) = -\log \sum_h e^{-E(v,h)} = -vb - \sum_j \log (1 + e^{c_j + W_j v})
+\begin{align}
+\mathcal{F}(v) & = -\log \sum_h e^{-E(v,h)} \nonumber \\
+& = -vb - \sum_j \log (1 + e^{c_j + W_j v})
 \label{eq:fev}
-\end{equation}
+\end{align}
 
 
 \subsection{DBNs: Stacking RBMs for Classification}
 RBMs have been used both as discriminative and generative models, and when stacked, the output of the hidden layers turns into input for the next hidden layers, creating 'feature feature-detectors.' Stacked RBMs have mostly been used as learning modules to form Deep Belief Networks (DBNs) \cite{Hinton} \cite{Schmah}. A DBN is a graphical model that learns to extract deep hierarchical representations from data as its structure consists of undirected connections at the top hidden layer, and directed connections in the lower layers \cite{Ngiam}. There can be as many hidden layers as desired, and together they compose a single, multilayer model.
 
-As a classifier, the model is discriminatively trained by stochastic gradient descent to model the joint distribution of $v$ and target class $y$, a 'softmax' label unit with a 'one out of C' representation. A separate RBM is trained for each class, and classification is determined by the free energy ($\mathcal{F}$)of each network \cite{Elfwing}. The free energy equation of a discriminative model becomes \cite{Louradour}:
+As a classifier, the model is discriminatively trained by stochastic gradient descent to model the joint distribution of $v$ and target class $y$, a 'softmax' label unit with a 'one out of C' representation. A separate RBM is trained for each class, and classification is determined by the free energy ($\mathcal{F}$) of each network \cite{Elfwing}. The free energy equation of a discriminative model becomes \cite{Louradour}:
 
-\begin{equation}
-\mathcal{F}(v, y) = -\log \sum_h e^{-E(v,h,y)} = -yd - \sum_j \log (1 + e^{c_j + W_j v + U_j y})
+\begin{align}
+\mathcal{F}(v, y) & = -\log \sum_h e^{-E(v,h,y)} \nunumber \\
+& = -yd - \sum_j \log (1 + e^{c_j + W_j v + U_j y})
 \label{eq:fevy}
-\end{equation}
+\end{align}
 
 where $d$ is the bias of class label $y$, and $U$ the class weight matrix. 
 
@@ -97,37 +101,42 @@ where $d$ is the bias of class label $y$, and $U$ the class weight matrix.
 \subsection{DBNs: Stacking RBMs for Prediction}
 Stacked RBMs have also been used with non-binary categories and continuous-valued inputs, and applied to tasks such as speech synthesis \cite{Jaitly}, fMRI image classification \cite{Schmah}, and time series forecasting \cite{Ginzburg} \cite{Kuremoto}. Continous-valued input $x$ is reconstructed to expected input $v$, and the output of the last feature-detecting RBM unit is the coarse prediction $\hat{x}$. Training consists in fine-tuning the model by adjusting the weights based on the value of $\mathcal{F}$ until the obtention of a refined prediction determined by the error rate of $\hat{x}$ compared to $x$\cite{Kuremoto}. The free energy equation for continuous, Gaussian-distributed visible units becomes \cite{Schmah}:
 
-\begin{equation}
-\mathcal{F}(v) = -\log \sum_h e^{-E(v,h)} =  - \sum_j \log (1 + e^{c_j + W_j v}) + \frac{1}{2} \sum_i (v - b)^2
+\begin{align}
+\mathcal{F}(v) & = -\log \sum_h e^{-E(v,h)} \nonumber \\
+& =  - \sum_j \log (1 + e^{c_j + W_j v}) + \frac{1}{2} \sum_i (v - b)^2
 \label{eq:fegbv}
-\end{equation}
+\end{align}
 
 
 
 
 \section{Experiment: The MNIST dataset}
-\subsection{Classification}
-The DBN classifier has been trained on the MNIST dataset, a collection of handwritten digits represented in vectors of strongly bimodal input values. In the original dataset, each pixel of the image is represented by a value between 0 and 255, where 0 is black, 255 is white and values in between are different shades of gray.
+The data used for the evaluation of the classification task is the MNIST dataset, a collection of handwritten digits represented in vectors of strongly bimodal input values. In the original dataset, each pixel of the image is represented by a value between 0 and 255, where 0 is black, 255 is white and values in between are different shades of gray.
 
 
-To test the classifier for performance when dealing with possibly erroneous data, we added noise to the input data. The input data are vectors of 784 float values between 0 and 1, each corresponding to a pixel of a 28x28 digital representation of a handwritten digit, where 0 is black, and 1 is white. Noise is simulated by corrupting the input vector, inserting 1's at randomly chosen locations, based on a set percentage ($pc$) and length ($c$).
+To test the classifier for performance when dealing with possibly erroneous data, we added noise to the input data. The input data are vectors of 784 values normalized to floats between 0 and 1, each corresponding to a pixel of a 28x28 digital representation of a handwritten digit, where 0 is black, and 1 is white.
 
 % example of corruption
 \begin{figure}[h!]
 	\subfigure[No corruption]{
 	\includegraphics[width=.28\textwidth]{five_img}}
-	\subfigure[$pc$=4 and $c$=1]{
+	\subfigure[$pc$=4 and $l$=1]{
 	\includegraphics[width=.28\textwidth]{corr_five_image}}
-	\subfigure[$pc$=4 and $c$=5]{
+	\subfigure[$pc$=4 and $l$=5]{
 	\includegraphics[width=.28\textwidth]{corr_five_c5_image}}
 	\caption{An example of an inverted digitalized handwritten 5 and the result after the two types of corruption processes.}
 \end{figure}
 
+\subsection{Digit classification}
 
-The test dataset contains 10000 image vectors. The error rates and $\mathcal{F}$ values are recorded for the control set, where the $\mathcal{F}$ of the whole network is calculated by adding the $\mathcal{F}(v,y)$ (eq.~\ref{eq:fevy}) of the top class layer, to the $\mathcal{F}(v)$ (eq.~\ref{eq:fev}) of the other layers. For the simulated noised dataset, each individual image vector of the test set is subject to random corruption, determined by a noise percentage and length. The dataset is then reran through the classifier. Table~\ref{table:control} shows the $\mathcal{F}$ mean for each set, and the classification error rate as the corruption percentage is incremented. The classification confusion matrices are presented in Figure~\ref{fig:CM}.
+
+\textbf{check the layer configuration}
+The DBN consists of three RBMs, where the first is a Bernouilli RBM, and the deeper layers binary RBMs. \textbf{check}. The model was trained with a configuration of 500 $\leftrightarrow$ 2000 $\leftrightarrow$ 2000. The test dataset contains 10000 image vectors. The error rates and $\mathcal{F}$ values are recorded for the control set, where the $\mathcal{F}$ of the whole network is calculated by adding the $\mathcal{F}(v,y)$ (eq.~\eqref{eq:fevy}) of the top class RBM, to the $\mathcal{F}(v)$ (eq.~\eqref{eq:fev}) of the other RBMs.
+
+For the simulated noised dataset, each individual image vector of the test set is subject to random corruption (where values are replaced with 1's), determined by a noise percentage $pc$ and length $l$. The corruption percentage is between 0 and 15\%, and the length is between 1 and 5 (pixels). Table~\ref{table:control} shows the $\mathcal{F}$ mean for each set, and the classification error rate as the corruption percentage is incremented. The classification confusion matrices are presented in Figure~\ref{fig:CM}.
 
 
-There are many techniques to discover if data is reliable, such as clustering for outlier detection cite{}, or training models with noise for robustness as in denoising autoencoders \cite{Vincent}, but we chose to inspect a measure that is specific to EBMs. We analyzed the behaviour of $\mathcal{F}$ outside of its role in the training of the model. In training, the energy determines the probability of a joint configuration of the visible (here the pixels of the image vector) and hidden units, and is used in the definition of the model's learning. In testing, energy can be used as a marker for unexpected input data since it is directly affected by the values of the visible layer. Figure~\ref{fig:nrgs} shows that, as expected, $\mathcal{F}$ evolves proportionally to the amount of added noise. 
+There are many techniques to discover if data is reliable, such as clustering for outlier detection cite{}, or training models with noise for robustness as in denoising autoencoders \cite{Vincent}, but we chose to inspect a measure that is specific to EBMs. We analyzed the behaviour of $\mathcal{F}$ outside of its role in the training of the model. In training, the energy determines the probability of a joint configuration of the visible and hidden units, and is used in the definition of the model's learning. In testing, energy can be used as a marker for unexpected input data since it is directly affected by the values of the visible layer. Figure~\ref{fig:nrgs} shows that, as expected, $\mathcal{F}$ evolves proportionally to the amount of added noise. 
 
 % control set table
 \begin{table}
@@ -144,7 +153,7 @@ There are many techniques to discover if data is reliable, such as clustering fo
 			columns/er/.style={column name={error rate}, column type={|c|}},
 			]{test_results/errfe_stats_0n.csv}
 	\end{center}
-	\caption{$\mathcal{F}$ mean and classification error rate as noise is increased.}
+	\caption{mean of $\mathcal{F}$ and classification error rate as noise is increased}
 	\label{table:control}
 \end{table}
 
@@ -166,35 +175,40 @@ There are many techniques to discover if data is reliable, such as clustering fo
 \end{figure}
 
 
-From the energy formula, we can see how $\mathcal{F}$ is directly affected. A deviation from the expected values of the input vector will be captured as the data goes through the network and and will be affected according to the model's learned weights. This will raise $\mathcal{F}$ and act as a flag for an undesirable configuration, or in our case, noisy data.
+From the energy formula, we can see how $\mathcal{F}$ is directly affected. A deviation from an expected $v$ will be captured when sent through the network as it will be affected according to the model's learned weights. This deviation will raise $\mathcal{F}$ and act as a flag for an undesirable configuration, or in our case, noisy data.
 
 
 \subsection{Reconstruction}
-In an attempt to fix the noisy data, we look to the generative powers of the network to reconstruct the image vector. As a generator, the bottom-up pass is the initialization process, or 'wake' phase, and the top-down, or 'sleep' phase is the generation process. This is different from denoising autoencoders in many ways. First, the model is not trained with noise, so the model attempts reconstruction at time of use, when encountering noise for the first time. Then, the reconstruction is not done by maximizing a variational bound, as proposed by \citep{Vincent}, but simply from a top-down generation process when triggered by a threshold, again, outside of training. Finally, the reconstruction is carried out given a class and the learned weights, and generates a new, possibly different form of the digit. \citep{Vincent}'s reconstruction is realized through a deterministic mapped representation of a corrupted $v$, and learned weights.
+In an attempt to fix the noisy data, we look to the generative powers of the network to reconstruct the corrupted vector. As a generator, the bottom-up pass is the initialization process, or 'wake' phase, and the top-down, or 'sleep' phase, is the generation process. This is different from denoising autoencoders in many ways. First, the model is not trained with noise, so the model attempts reconstruction at time of use, when encountering noise for the first time. Then, the reconstruction is not done by maximizing a variational bound, as proposed by \citet{Vincent}, but simply from a top-down generation process when triggered by a threshold, again, outside of training. Finally, the reconstruction is carried out given a class and the learned weights, and generates a new, possibly different form of the digit. \citet{Vincent}'s reconstruction is realized through a deterministic mapped representation of a corrupted $v$, and learned weights.
 
 The issue here is that for the generation task, the model must be provided a class of the desired digit. Our class prediction $y$ is unreliable, as seen from the increasing error rates, and the wrong class will generate the wrong digit. We therefore must choose a threshold to alert us when a predicted class cannot be trusted.
 % One important difference is that deterministic autoencoders consider that real valued mean as their hidden representation whereas stochastic RBMs sample a binary hidden representation from that mean. 
 
 
+$\mathcal{F}$ is measured using arbitrary units, and its range is specific to each model. The threshold must therefore be chosen based on individual models. The maximum recorded value of $\mathcal{F}$ from the control set was chosen as the threshold for our classifier. During the wake phase, if the calculated $\mathcal{F}$ of a given input vector is greater than the set threshold, it is sent back to the first layer and is run through the wake phase $n$ times. The prediction of each reclassification is stored and the class with the greatest count is then chosen as the class label to be clamped in the sleep phase. This new image is weighted, fused with the original one that has also been weighted, and reclassified for evaluation. The results are presented in Table~\ref{table:results}. Algorithm ~\ref{alg:mnist} demonstrates how the reclassification process is carried out, and an example of mixing the process is demonstrated in Figure~\ref{fig:mixing}.
+
+\smallskip
+
 \begin{algorithm}[H]
- \KwData{digit image vector}
- \KwResult{digit class}
-  classify corrupted image\;
-  calculate $\mathcal{F}$ of network\;
-  \eIf{$\mathcal{F} > threshold$}{
-   reclassify $n$ times\;
-   class with most count becomes current class\;
-   generate with clamped class label\;
-   mix corrupted image with generated image\;
-   reclassify\;
-   }{
-   return class\;
-  }
- \caption{Reclassification and Generation}
+	\KwData{digit image vector}
+	\KwResult{digit class}
+ 	corrupt $pc$\% of input vector with length $l$\;
+	classify $x_{corr}$\;
+	calculate $\mathcal{F}$ of network\;
+	\eIf{$\mathcal{F} > threshold$}{
+		reclassify $n$ times\;
+		class with most count becomes current class\;
+		generate with clamped class label\;
+		mix weighted $x_{corr}$ and weighted $x_{gen}$\;	
+		classify $x_{gen}$\;
+		}{
+	return class of $x_{gen}$\;
+	}
+	\caption{Reclassification and Generation}
+	\label{alg:mnist}
 \end{algorithm}
 
-
-$\mathcal{F}$ is measured using arbitrary units, and its range is specific to each model. The threshold must therefore be chosen based on individual models. The maximum recorded value of $\mathcal{F}$ from the control set was chosen as the threshold for our classifier. During the wake phase, if the calculated $\mathcal{F}$ of a given input vector is greater than the set threshold, it is sent back to the first layer and reclassified $n$ times. The prediction of each reclassification is stored and the class with the greatest count is then chosen as the class label to be clamped in the sleep phase. This new image is weighted, fused with the original one that has also been weighted, and reclassified for evaluation. The results are presented in Table~\ref{table:results}, an an example of the process is demonstrated in Figure~\ref{fig:mixing}.
+\smallskip
 
 %result tables
 {\newgeometry{left=1.6cm, right=1.6cm, top=2cm}
@@ -395,13 +409,15 @@ $\mathcal{F}$ is measured using arbitrary units, and its range is specific to ea
 }
 
 \subsection{Analysis}
-While running the reclassification and recontruction trials, we saw that there was an important drop in error rates in the classification of the mixed images, but what's more is that reclassification alone was even more successful.
+While running the reclassification and reconstruction trials, we saw that there was an important drop in error rates in the classification of the mixed images, but what's more is that reclassification alone was even more successful. The results table therefore also includes the reclassification without generation results.
 
-From the graphs in Figure~\ref{fig:errgraph}, we can see that subjecting the corrupted images to reclassification alone yields better results in terms of error rate. However, if the goal is to reconstruct the input data to rid it of noise, the added reconstruction is also successful, as seen by both the error rates and the values of $\mathcal{F}$. 
+From the graphs in Figure~\ref{fig:errgraph}, we can see that by simply averaging the $n$-reclassification output, the results in terms of error rate are the best. However, if the goal is to reconstruct the input data to rid it of noise, the added reconstruction is also successful, as seen by both the error rates and the values of $\mathcal{F}$. 
 
 The number of reclassification iterations has an effect as well, as shown in Table~\ref{table:results}. The greater the $n$, the lower the error rates. The optimal number for reclassification iterations was set to $n$=50 and has been chosen based on the favourable results and the amount of time required to reclassify.
 
 Table~\ref{table:results_c} shows the effect of the length of corruption. As it is increased, the error rate increases as well, but only until the 5\% corruption level. At 10\% corruption, the error rate decreases as the length increases, both for reconstruction and reclassification.
+
+\textbf{why?}
 
 
 
@@ -454,7 +470,7 @@ Table~\ref{table:results_c} shows the effect of the length of corruption. As it 
 
 
 
-The mixing is to avoid the network classifying its own generation, but also to emphasize the features that are to be detected by the network. This is done by applying a weight to the original image to pull out the important features amongst the noise, and the inverse of the weight vector to the generated image to pull out the noiseless features. The weight vector is built by taking the average of all images from the control dataset. Figure~\ref{fig:mixing} below shows how the mixing is done.
+The mixing is to avoid the network classifying its own generation, but also to emphasize the useful features that are to be detected by the network. This is done by applying a weight to the original image to pull out the important features amongst the noise, and the inverse of the weight vector to the generated image to pull out the noiseless features. The weight vector is built by taking the average of all images from the control dataset.
 
 % mixing process
 \begin{figure}
@@ -470,7 +486,12 @@ The mixing is to avoid the network classifying its own generation, but also to e
 	\label{fig:mixing}
 \end{figure}
 
+\subsection{Conclusion} % (fold)
+\label{sub:conclusion}
 
+
+
+% subsection conclusion (end)
 \pagebreak
 \input{../KDeepBeliefNetwork_summer/tempSummary.tex}
 
